@@ -21,20 +21,21 @@ export async function getJournalists() {
 }
 
 
-// Get all articles that written by a specifi journalist id
-export async function getAllArticlesByJournalistId(id) {
+// Get all articles that written by a specific journalist id
+export async function getJournalistsArticleById(id) {
     try{
         const [result] = await pool.query(
-            'SELECT a.*, j.name AS journalist_name, a.category FROM articles a JOIN journalist j ON a.journalistId = j.id WHERE j.id = ?', id
+            `SELECT a.*, j.name AS journalist_name, a.category
+            FROM articles a
+            JOIN journalists j ON a.journalistId = j.id
+            WHERE a.journalistId = ?`, [id]
         );
-
-        return result;
-    } catch (error) {
-        console.log("Error fetching articles: ", error);
+        return(result);
+    } catch (err) {
+        console.log("Error fetching article: ", err);
+        throw err;
     }
 }
-
-
 
 // Get all articles
 export async function getArticles() {
@@ -51,7 +52,7 @@ export async function getArticles() {
     }
 }
 
-// Get one article by ID
+// GET one article by Id
 export async function getArticleById(id) {
     try{
         const [result] = await pool.query(
@@ -66,6 +67,7 @@ export async function getArticleById(id) {
         throw err;
     }
 }
+
 
 // Create a new article
 export async function createArticle(article) {

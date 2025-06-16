@@ -123,6 +123,12 @@ button:hover {
 
 /*  ----------  CARDS  --------------------- */
 
+.article-list-header {
+  display: flex;
+  justify-content: center;
+  
+}
+
 .article-list {
   margin: 20px;
   margin-top: 2em;
@@ -203,4 +209,9 @@ button:hover {
   background-color: var(--main-color-light);
   color: white;
   border-color: var(--main-color-light);
+}
+
+.article-description {
+  display: flex;
+  justify-content: space-between;
 }

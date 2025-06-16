@@ -11,14 +11,15 @@ export default function ArticlePage() {
 
   useEffect(() => {
     fetchArticle();
-  }, []);
+    console.log(article)
+  }, [id]);
 
 
   const fetchArticle = async () => {
     try {
       setLoading(true);
 
-      const found = getArticleById(id);
+      const found = await getArticleById(Number(id));
       if (found) {
         setArticle(found);
         setError("");
@@ -39,14 +40,10 @@ export default function ArticlePage() {
 
   return (
     <div>
-      <h2>{article.title}</h2>
-      <p>{article.content}</p>
-      <div>
-        <strong>Journalist:</strong> {article.journalist_name}
-      </div>
-      <div>
-        <strong>Category:</strong> {article.category}
-      </div>
+      <h1 style={{textAlign: "center"}}></h1>
     </div>
   );
 }
+
+
+// TODO: Get fix the api to fetch the article by id

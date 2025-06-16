@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getArticles, getJournalists, removeArticle } from "../services/api";
+import { getArticles, removeArticle } from "../services/api";
 
 //
 // ArticleList component
@@ -10,28 +10,27 @@ export default function ArticleList() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [journalists, setJournalists] = useState([]);
-  const [isJournalistsLoading, setIsJournalistsLoading] = useState(true);
-  const [journalistsError, setJournalistsError] = useState("");
+  // const [journalists, setJournalists] = useState([]);
+  // const [isJournalistsLoading, setIsJournalistsLoading] = useState(true);
+  // const [journalistsError, setJournalistsError] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchArticles(); // Fetch all articles when component mounts
-    fetchJournalists();
   }, []);
 
-  const fetchJournalists = async () => {
-    setIsJournalistsLoading(true);
-    setJournalistsError("");
-    try {
-      const data = await getJournalists();
-      setJournalists(data);
-    } catch (err) {
-      setJournalistsError("Fail to load journalists. Please try again.");
-      console.log(err);
-    }
-  }
+  // const fetchJournalists = async () => {
+  //   setIsJournalistsLoading(true);
+  //   setJournalistsError("");
+  //   try {
+  //     const data = await getJournalists();
+  //     setJournalists(data);
+  //   } catch (err) {
+  //     setJournalistsError("Fail to load journalists. Please try again.");
+  //     console.log(err);
+  //   }
+  // }
 
 
   const fetchArticles = async () => {
@@ -64,11 +63,13 @@ export default function ArticleList() {
 
   const handleEdit = (id) => navigate(`/articles/${id}/edit`);
 
+  const handleJournalist = (id) => navigate(`/journalist/${id}/articles`);
+
+
   return (
     <>
       {isLoading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {journalistsError && <p style={{ color: "red" }}>{journalistsError}</p>}
       
       <div className="article-list">
         {articles.map((article) => (
@@ -78,29 +79,38 @@ export default function ArticleList() {
             onView={handleView}
             onEdit={handleEdit}
             onDelete={deleteArticle}
+            onJournalist={handleJournalist}
           />
         ))}
       </div>
-
     </>
   );
 }
 
 
-function JournalistCard({ journalist }) {
-  return (
-    <div className="journalist-card">
-      <div className="journalist-name">{journalist.name}</div>
-      <div className="journalist-id">Id: {journalist.id}</div>
-    </div>
-  );
-}
+// function JournalistCard({ journalist }) {
+//   return (
+//     <div className="journalist-card">
+//       <div className="journalist-name">{journalist.name}</div>
+//       <div className="journalist-id">Id: {journalist.id}</div>
+//     </div>
+//   );
+// }
 
-function ArticleCard({ article, onView, onEdit, onDelete }) {
+function ArticleCard({ article, onView,  onEdit, onDelete, onJournalist }) {
   return (
     <div className="article-card">
       <div className="article-title">{article.title}</div>
-      <div className="article-author">By {article.journalist_name}</div>
+      <div className="article-author">
+        By&nbsp;
+        <span
+          style={{cursor: "pointer"}}
+          onClick={() => onJournalist(article.journalistId)}
+          className="author-link"
+        >
+          {article.journalist_name}
+        </span>
+      </div>
 
       <div className="article-actions">
         <button className="button-tertiary" onClick={() => onEdit(article.id)}>

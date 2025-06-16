@@ -13,6 +13,11 @@ export const getJournalists = async () => {
   return response.data;
 }
 
+export const getArticleByJournalistsId = async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/journalists/${id}/articles`);
+  return response.data;
+}
+
 export const getArticleById = async (id) => {
   const response = await axios.get(`${API_BASE_URL}/articles/${id}`);
   return response.data;

@@ -5,15 +5,16 @@ import * as sqlArticleRepository from "../repositories/sqlArticleRepository.js";
 
 // GET / all articles by journalist id 
 
-export async function  getAllArticlesByJournalistId(req, res) {
+export async function getJournalistsArticleById(req, res) {
   try {
-    const articles = await sqlArticleRepository.getAllArticlesByJournalistId(req.params.id);
+    const articles = await sqlArticleRepository.getJournalistsArticleById(req.params.id);
     res.json(articles);
   } catch (error) {
     console.log("Error fetching articles:", error);
     res.status(500).json({ message: "Server Error"});
   }
 }
+
 
 export async function getJournalists(req, res) {
   try {
