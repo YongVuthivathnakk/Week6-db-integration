@@ -2,6 +2,30 @@ import * as sqlArticleRepository from "../repositories/sqlArticleRepository.js";
 
 // TODO : Change articleRepository to use the sqlArticleRepository
 
+
+// GET / all articles by journalist id 
+
+export async function  getAllArticlesByJournalistId(req, res) {
+  try {
+    const articles = await sqlArticleRepository.getAllArticlesByJournalistId(req.params.id);
+    res.json(articles);
+  } catch (error) {
+    console.log("Error fetching articles:", error);
+    res.status(500).json({ message: "Server Error"});
+  }
+}
+
+export async function getJournalists(req, res) {
+  try {
+    const journalists = await sqlArticleRepository.getJournalists();
+    res.json(journalists)
+  } catch (error) {
+    console.log("Error fetching articles: ", error);
+    res.status(500).json({ message: "Server Error"});
+  }
+} 
+
+
 // GET /api/articles
 export async function getAllArticles(req, res) {
   try {

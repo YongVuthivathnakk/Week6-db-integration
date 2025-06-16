@@ -11,7 +11,7 @@ app.use(cors());
 // Enable json serialization
 app.use(json());
 
-app.use("/api/articles", articleRouter);
+app.use("/api/", articleRouter);
 
 const PORT = 4000;
 app.listen(PORT, () => {

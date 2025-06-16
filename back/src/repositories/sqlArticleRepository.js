@@ -7,6 +7,35 @@
 import { pool } from "../utils/database.js";
 
 
+// Get all journalist
+
+export async function getJournalists() {
+    try{
+        const [result] = await pool.query(
+            'SELECT * from journalists'
+        );
+        return result;
+    } catch (error) {
+        console.log("Error fetching articles: ", error);
+    }
+}
+
+
+// Get all articles that written by a specifi journalist id
+export async function getAllArticlesByJournalistId(id) {
+    try{
+        const [result] = await pool.query(
+            'SELECT a.*, j.name AS journalist_name, a.category FROM articles a JOIN journalist j ON a.journalistId = j.id WHERE j.id = ?', id
+        );
+
+        return result;
+    } catch (error) {
+        console.log("Error fetching articles: ", error);
+    }
+}
+
+
+
 // Get all articles
 export async function getArticles() {
     try{
