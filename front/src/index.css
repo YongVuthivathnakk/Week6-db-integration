@@ -237,3 +237,21 @@ button:hover {
   color: #fff;
   border: 2px solid #007bff;
 }
+
+
+
+.categories-list {
+  padding: 5px 7px;
+  background-color: transparent;
+  color: grey;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+.categories-list-group {
+  display: flex;
+  gap: 0.5em;
+  padding-bottom: 1em;
+  flex-wrap: wrap;
+}

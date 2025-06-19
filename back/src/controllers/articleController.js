@@ -55,7 +55,6 @@ export async function getArticleById(req, res) {
 // POST /api/articles
 export async function createArticle(req, res) {
   try {
-    console.log("Request body:", req.body);
     const newArticle = await sqlArticleRepository.createArticle(req.body);
     res.status(201).json(newArticle);
   } catch (error) {
