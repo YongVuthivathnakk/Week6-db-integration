@@ -11,14 +11,14 @@ export default function ArticlePage() {
 
   useEffect(() => {
     fetchArticle();
-  }, []);
+    console.log(article);
+  }, [id]);
 
 
   const fetchArticle = async () => {
     try {
       setLoading(true);
-
-      const found = getArticleById(id);
+      const found = await getArticleById(id);
       if (found) {
         setArticle(found);
         setError("");
@@ -39,13 +39,12 @@ export default function ArticlePage() {
 
   return (
     <div>
-      <h2>{article.title}</h2>
-      <p>{article.content}</p>
-      <div>
-        <strong>Journalist:</strong> {article.journalist_name}
-      </div>
-      <div>
-        <strong>Category:</strong> {article.category}
+      <h1 style={{textAlign: "center"}}>
+        {article.title}
+      </h1>
+      <p style={{textAlign: "center"}} className="article-snippet">By {article.journalist_name}</p>
+      <div className="article-content">
+        <p>{article.content}</p>
       </div>
     </div>
   );

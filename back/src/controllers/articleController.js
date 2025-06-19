@@ -5,15 +5,16 @@ import * as sqlArticleRepository from "../repositories/sqlArticleRepository.js";
 
 // GET / all articles by journalist id 
 
-export async function  getAllArticlesByJournalistId(req, res) {
+export async function getJournalistsArticleById(req, res) {
   try {
-    const articles = await sqlArticleRepository.getAllArticlesByJournalistId(req.params.id);
+    const articles = await sqlArticleRepository.getJournalistsArticleById(req.params.id);
     res.json(articles);
   } catch (error) {
     console.log("Error fetching articles:", error);
     res.status(500).json({ message: "Server Error"});
   }
 }
+
 
 export async function getJournalists(req, res) {
   try {
@@ -54,6 +55,7 @@ export async function getArticleById(req, res) {
 // POST /api/articles
 export async function createArticle(req, res) {
   try {
+    console.log("Request body:", req.body);
     const newArticle = await sqlArticleRepository.createArticle(req.body);
     res.status(201).json(newArticle);
   } catch (error) {
@@ -88,4 +90,29 @@ export async function deleteArticle(req, res) {
     console.error("Error deleting article:", error);
     res.status(500).json({ message: "Server error" });
   }
+}
+
+
+// GET /api/articles
+export async function getAllCategories(req, res) {
+  try {
+    const categories = await sqlArticleRepository.getAllCategories();
+    res.json(categories);
+  } catch (error) {
+    console.log("Error fetching articles", error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+
+// GET /api/categories/:id/articles
+export async function getFilteredCategories(req, res) {
+    const categoryId = req.params.id;
+    try {
+        const articles = await sqlArticleRepository.getFilteredCategories(categoryId);
+        res.json(articles);
+    } catch (error) {
+        console.log("Error fetching articles by category:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
 }
